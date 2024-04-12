@@ -1,0 +1,132 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+    color: black; 
+    padding: 10px;
+    font-weight: 900;
+    align-items: center;
+    background-color: aliceblue;
+    width: 100%;
+    height: 6rem;
+}
+.bookmark-btn::before {
+    content: "\f02e"; 
+    font-family: "Font Awesome 5 Free"; 
+    margin-right: 5px; 
+}
+
+    ::-webkit-scrollbar{
+    width: 15px;
+} 
+    ::-webkit-scrollbar-thumb{
+    background-color: #fff;
+}
+ 
+.side-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: gray;
+    margin-right: 288px;
+    display: flex;
+    flex-direction: column;
+}
+.side-bar h1{
+    padding-top: 18px;
+}
+.recipeHeader{
+    text-align: center;
+    position: relative;
+    left: 300px;
+    width: calc(100% - 300px);
+}
+.recipeHeader h3{
+    left: 15%;
+}
+
+.scroll-box{
+    overflow: auto;
+   
+}
+.scroll-box-inner p{
+    color: #fff;
+}
+
+
+.card-contents{
+    position: relative;
+    left: 300px;
+    width: calc(100% - 300px);
+}
+.searchRecipes{
+    width: 75%;
+    padding: 8px;
+    border-radius: 10px;
+    margin-left: 50px;
+}
+.searchRecipes::after{
+  content: '\f002';
+  font-family: 'Font Awesome 5 Free';
+  width: 20px;
+  font-weight: 900;
+  font-size: 20px; 
+  margin-left: 5px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 1rem;
+  transition: box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  margin-left: 40px;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card_img{
+    width: 100%;
+    height: auto;
+    border-radius: 10px 0 0 12px;
+}
+.sidebar.active {
+  right: 0;
+}
+
+
+.time-prep {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-left: 20rem;
+}
+
+.fa-regular.fa-clock {
+    padding-right: 10px;
+    font-size: 1.2em; /* Adjust the size of the clock icon as needed */
+}
+
+.minutes {
+    margin-right: 2rem; /* Adjust as needed to separate the minutes from difficulty */
+}
+
+.difficulty {
+    font-weight: bold; /* Example styling for difficulty */
+    
+}
+
+
+
+  

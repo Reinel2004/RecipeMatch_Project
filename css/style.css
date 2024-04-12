@@ -1,0 +1,140 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+@font-face {
+    font-family: LTPerfume;
+    src: url(/fonts/LTPerfume-2.ttf);
+}
+@font-face{
+    font-family: SuperSunday;
+    src: url(/fonts/Super\ Sunday\ Personal\ Use.ttf);
+}
+
+.navbar {
+    
+    background-color: #fff; 
+    color: black; 
+    padding: 10px;
+    font-weight: 900;
+    align-items: center;
+    background-color: aliceblue;
+    width: 100%;
+    height: 6rem;
+}
+.bookmark-btn::before {
+    content: "\f02e";
+    font-family: "Font Awesome 5 Free"; 
+    margin-right: 5px;
+}
+main .header-content h1{
+    font-family:'LTPerfume';
+    font-size: 60px;
+}
+main .main-content{
+    background-image: url("../assets/recipesbg.png");
+    height: 100vh;
+}
+.main-content img {
+    width: 350px;
+    margin: 4rem 0px 0px 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+main .main-content .header-content{
+    margin-top: 8rem;    
+}
+
+main .content{
+    background-color: #5C5C5C;
+    height: 160vh;
+}
+main .content .trash{
+    padding-left: 130px;
+}
+main .content .waste-content{
+    color: white;
+    background-color: rgba(255, 255, 255, 0.452);
+    height: 40vh;
+    text-align: justify;
+    padding: 20px 30px 0 20px ;
+    margin-bottom: 100px;
+}
+
+main .content .discover-icon{
+    padding-left: 130px;
+}
+main .content .discover-content{
+    color: white;
+    background-color: rgba(255, 255, 255, 0.452);
+    height: 40vh;
+    text-align: justify;
+    padding: 20px 30px 0 20px ;
+    margin-top: 20px;
+}
+main .recipes-content{
+    height: 100vh;
+}
+main .recipes-content h1{
+     padding-top: 40px;
+     margin-bottom: 40px;
+}
+main .recipes-content .row [class^="col-"] {
+    margin: 0 px 20px 5px;
+}
+
+
+
+
+.slider-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+.card {
+    flex: 0 0 auto;
+    width: 300px; 
+    margin-right: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.card:hover {
+    cursor: pointer;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+main .recipes-content .card img{
+    border-radius: 30px;
+}
+.recipes-content .headerchoose{
+    color: black;
+    font-family: 'SuperSunday';
+}
+.prev-btn,
+.next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.452);
+    color: rgb(7, 5, 5);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
