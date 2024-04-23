@@ -12,6 +12,7 @@
     background-color: aliceblue;
     width: 100%;
     height: 6rem;
+
 }
 .bookmark-btn::before {
     content: "\f02e"; 
@@ -78,7 +79,10 @@
   font-size: 20px; 
   margin-left: 5px;
 }
-
+.text-content{
+    padding-top: 50px;
+    padding-left: 43%;
+}
 .card {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125);

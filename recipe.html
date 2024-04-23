@@ -73,6 +73,11 @@
             </div>                                                                                                                           
         </nav>
 
+        <div class="row m-0 text-content" id="text-content">
+            <img src="" alt="">
+            <h2>Add your ingredients to get started</h2>
+        </div>
+        
         <div class="row m-0 main-content" id="recipeResults">
            
         </div>
@@ -101,10 +106,11 @@
         const recipeResults = document.getElementById('recipeResults');
 
             form.addEventListener('submit', function(event) {
-            event.preventDefault();
+                event.preventDefault();
 
             const inputValue = document.getElementById('inputValue').value;
             const recipes = [
+               
                 { name: 'Scrambled Eggs', ingredients: ['eggs', 'egg', 'salt', 'pepper'], difficulty: 'hard', time: '5 Minutes' },
                 { name: 'Omelette', ingredients: ['eggs', 'cheese', 'egg', 'tomatoes', 'onions'], difficulty: 'hard', time: '5 Minutes' },
                 { name: 'Boiled Eggs', ingredients: ['eggs', 'water', 'egg'], difficulty: 'hard', time: '5 Minutes' },
@@ -113,13 +119,14 @@
                 { name: 'Kare-Kare', ingredients: ['Oxtail', 'Banana Heart', 'Eggplant', 'String Beans (Sitaw)', 'Pehcay', 'Achuete', 'Peanut Sauce'] },
                 { name: 'Bicol Express', ingredients: ['Pork', 'Shrimp Paste', 'Garlic', 'Onion', 'Coconut Cream', 'Coconut Milk', 'Chili Peppers', 'Finger Chilies (Siling haba)'] },
                 { name: 'Tinolang Manok', ingredients: ['Chicken', 'Garlic', 'Onion', 'Ginger', 'Papaya', 'Chili leaves(Malunggay)', 'Fish Sauce', 'Salt', 'Pepper'] },
-                { name: 'Pakbet', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] },
-                { name: 'Sinigang na Baboy', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] }
+                { name: 'Pakbet', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] }
             ];
 
-                const suggestedRecipes = recipes.filter(recipe => {
-                    return recipe.ingredients.includes(inputValue.toLowerCase());
+            const suggestedRecipes = recipes.filter(recipe => {
+                return recipe.ingredients.some(ingredient => {
+                    return ingredient.toLowerCase().includes(inputValue.toLowerCase());
                 });
+            });
 
                 renderRecipes(suggestedRecipes);
             });
@@ -130,12 +137,32 @@
                 if (recipes.length > 0) {
                     recipes.forEach(recipe => {
                         const div = document.createElement('div');
+                        const removetext = document.getElementById('text-content')
+
+                        removetext.style.display = "none";
                         div.classList.add('col-lg-12', 'mt-4', 'card-contents');
+
+                        const links = {
+                            'scrambled eggs': 'index.html'
+                        };
+                        const recipesimage = {
+                            'scrambled eggs': './assets/scrambledeggs.png',
+                            'omelette': './assets/omelette.png',
+                            'adobo': './assets/adobo.png',
+                            'kare-kare': './assets/omelette.png',
+                            'bicol express': './assets/bicolexpress.png',
+                            'tinolang manok': './assets/omelette.png',
+                            
+                        };
+
+                        const imagePath = recipesimage[recipe.name.toLowerCase()];
+                        const linksPath = links[recipe.name.toLowerCase()];
+
                         div.innerHTML = `
                             <div class="card" style="max-width: 90%; margin-bottom: 10px;">
                                 <div class="row g0">
                                     <div class="col-lg-3">
-                                        <img src="./assets/omellete.jpg" class="card_img" alt="" srcset="">
+                                        <img src="${imagePath}" class="card_img" alt="" srcset="">
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="card-body">
@@ -148,7 +175,7 @@
                                             <h5 class="card-title"><b>${recipe.name}</b></h5>
                                             <h5 class="card-text"></h5>
                                             <p class="card-text"><b>Ingredients: </b>${recipe.ingredients.join(', ')}</p>      
-                                            <a href="" class="float-end mt-3" style="padding-bottom: 20px;">View recipe</a>
+                                            <a href="${linksPath}" class="float-end mt-3" style="padding-bottom: 20px;">View recipe</a>
                                         </div>
                                     </div>
                                 </div>
@@ -158,6 +185,10 @@
                     });
                 } else {
                     const div = document.createElement('div');
+                    const removetext = document.getElementById('text-content')
+
+                    removetext.style.display = "none";
+
                     div.classList.add('mt-5', 'recipes-notfound', 'text-center');
                     div.style.paddingLeft = '25%';
                     div.textContent = 'Recipes Not Found';
