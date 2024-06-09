@@ -18,7 +18,6 @@ body{
 }
 .navbar {
     background-color: #132332; 
-   
     padding: 10px;
     font-weight: 900;
     align-items: center;
@@ -28,6 +27,24 @@ body{
 nav .nav-link{
     color: white; 
 }
+nav .active-link{
+    color: #d7a94a;
+}
+
+nav .nav-item .nav-link a::after{
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #d7a94a;
+    transition: all 0.3s ease;
+}
+nav .nav-item .nav-link a:hover::after{
+    width: 100%;
+}
+
 .bookmark-btn::before {
     content: "\f02e";
     font-family: "Font Awesome 5 Free"; 
@@ -138,12 +155,25 @@ main .content .discover-content{
 
 /* RECIPES CONTENT */
 
+.hidden{
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100);
+    transition: all 1s;
+}
+
+.show{
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+
 main .box3{
     width: 100%;
     padding: 40px;
     background-color: #132332;
 }
-main .box4{
+section .box4{
     position: absolute;
     top: 280%;
     left: 20%;
@@ -153,14 +183,14 @@ main .box4{
     border-radius: 50px;
 }
 
-main .recipes-content{
+section .recipes-content{
     height: 100vh;
 }
-main .recipes-content h1{
+section .recipes-content h1{
      padding-top: 40px;
      margin-bottom: 40px;
 }
-main .recipes-content .row [class^="col-"] {
+section .recipes-content .row [class^="col-"] {
     margin: 0 0px 20px 5px;
 }
 
@@ -230,8 +260,14 @@ main .recipes-content .card img{
 }
 
 main .box5{
+    width: 100%;
+    margin-top: 50px;
+    padding: 40px;
+    background-color: #132332;
+}
+main .box6{
     position: absolute;
-    top: 395%;
+    top: 368%;
     left: 20%;
     width: 100px;
     padding: 40px;

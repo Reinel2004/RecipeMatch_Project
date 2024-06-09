@@ -21,7 +21,7 @@
                 </ul>
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link active-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="recipe.html">Recipes</a>
@@ -54,56 +54,59 @@
             </div>
         </div>
 
-        <div class="content">
-            <div class="box"></div>
-            <div class="box2"></div>
-            <div class="container">
-                <div class="text-center">
-                    <h1 style="padding-top: 4rem; color: white; font-weight: 600;">Recipe<span style="color: #d7a54b;">Match</span></h1>
-                    <p style="padding: 0 20% 100px 20%; padding-top: 10px; color: white;" >generate a list of recipes that use those ingredients along with reviews and nutritional information and it can also filter the recipes by difficulty and cooking time</p>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <img src="assets/trash.png" class="trash" alt="" srcset="">
+        <section class="hidden">
+            <div class="content">
+                <div class="box"></div>
+                <div class="box2"></div>
+                <div class="container">
+                    <div class="text-center">
+                        <h1 style="padding-top: 4rem; color: white; font-weight: 600;">Recipe<span style="color: #d7a54b;">Match</span></h1>
+                        <p style="padding: 0 20% 100px 20%; padding-top: 10px; color: white;" >generate a list of recipes that use those ingredients along with reviews and nutritional information and it can also filter the recipes by difficulty and cooking time</p>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="text-start waste-content">
-                            <h2 style="color: #aaad2a;">
-                                Reduce food waste
-                            </h2>
-                            <p>
-                                RecipeMatch allows you to save on money through a number of ways, for instance, by suggesting delightful ways of using up leftover produce. Put in the ingredients you have in your house, 
-                                and RecipeMatch will give you several ideas where to use those ingredients.
-                                Less waste, more savings
-                            </p>
+                    <div class="row hidden">
+                        <div class="col-lg-6">
+                            <img src="assets/trash.png" class="trash" alt="" srcset="">
                         </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="text-start discover-content">
-                            <h2 style="color: #aaad2a;">
-                                Discover creative Filipino meal
-                            </h2>
-                            <p>
-                                Discover Filipino recipes and see that all are prepared with simple ingredients.
-                                 RecipeMatch will let you try a variety of recipes that you will able to make with your available ingrediants at home. 
-                                 Whether you need a weekday meal or a special dish for a event, RecipeMatch has everything you need.
-                            </p>
+                        <div class="col-lg-6">
+                            <div class="text-start waste-content">
+                                <h2 style="color: #aaad2a;" class="hidden">
+                                    Reduce food waste
+                                </h2>
+                                <p>
+                                    RecipeMatch allows you to save on money through a number of ways, for instance, by suggesting delightful ways of using up leftover produce. Put in the ingredients you have in your house, 
+                                    and RecipeMatch will give you several ideas where to use those ingredients.
+                                    Less waste, more savings
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <img src="assets/disvocer icon.png" class="discover-icon" alt="" srcset="">
+    
+                        <div class="col-lg-6">
+                            <div class="text-start discover-content">
+                                <h2 style="color: #aaad2a;" class="hidden">
+                                    Discover creative Filipino meal
+                                </h2>
+                                <p>
+                                    Discover Filipino recipes and see that all are prepared with simple ingredients.
+                                     RecipeMatch will let you try a variety of recipes that you will able to make with your available ingrediants at home. 
+                                     Whether you need a weekday meal or a special dish for a event, RecipeMatch has everything you need.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <img src="assets/disvocer icon.png" class="discover-icon" alt="" srcset="">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+       
 
 
         <!-- Chooses recipes -->
 
         <div class="box3"></div>
         <div class="box4"></div>
-        <div class="container">
+        <div class="container hidden">
             <div class="featured-recipes">
                 <div class="recipes-content">
                     <h1 class="headerchoose" style="font-weight: 200; ">Choose and <span style="color:#aaad2a; font-family: 'Franklin Gothic Medium';">Enjoy</span></h1>
@@ -166,8 +169,8 @@
             </div>
         </div>       
 
-        <div class="box3"></div>
         <div class="box5"></div>
+        <div class="box6"></div>
         <div class="container">
             <div class="how-to-use">
                 <h1 style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: white; padding-top: 50px;"><span style="color: #d7a54b;">How</span> to use</h1>
@@ -203,6 +206,7 @@
         <p>All rights reserved RecipeMatch</p>
     </footer>
   
+
     <script>
         const slider = document.querySelector('.slider');
         const prevBtn = document.querySelector('.prev-btn');
@@ -226,6 +230,7 @@
     });
     </script>
 
+    <script src="app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
