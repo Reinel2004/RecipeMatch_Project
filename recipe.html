@@ -38,7 +38,7 @@
 
         <nav class="row m-0">
             <div class="side-bar" style="margin-top: 6rem;">
-                <h1 class="text-center text-white">Pantry</h1>
+                <h1 class="text-center">Pantry</h1>
                 <hr>
                 <div class="scroll-box">
                     <div class="items" id="ingredientItems">
@@ -90,132 +90,250 @@
         const form = document.getElementById('recipeForm');
         const recipeResults = document.getElementById('recipeResults');
         const inputtedIngridients = document.getElementById('inputValue');
+        const ingredientItems = document.getElementById('ingredientItems');
+        const ingredients = [];
 
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
+        form.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-            const inputValue = document.getElementById('inputValue').value;
-            const recipes = [
-               
-                { name: 'Scrambled Eggs', ingredients: ['eggs', 'egg', 'salt', 'pepper'], difficulty: 'hard', time: '5 Minutes' },
-                { name: 'Omelette', ingredients: ['eggs', 'cheese', 'egg', 'tomatoes', 'onions'], difficulty: 'hard', time: '5 Minutes' },
-                { name: 'Boiled Eggs', ingredients: ['eggs', 'water', 'egg'], difficulty: 'hard', time: '5 Minutes' },
-                { name: 'Adobo', ingredients: ['Pork', 'Soy sauce', 'Vinegar', 'Garlic', 'Bay Leaves', 'Black Peppercorns'] },
-                { name: 'Sinigang na Baboy', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] },
-                { name: 'Kare-Kare', ingredients: ['Oxtail', 'Banana Heart', 'Eggplant', 'String Beans (Sitaw)', 'Pehcay', 'Achuete', 'Peanut Sauce'] },
-                { name: 'Bicol Express', ingredients: ['Pork', 'Shrimp Paste', 'Garlic', 'Onion', 'Coconut Cream', 'Coconut Milk', 'Chili Peppers', 'Finger Chilies (Siling haba)'] },
-                { name: 'Tinolang Manok', ingredients: ['Chicken', 'Garlic', 'Onion', 'Ginger', 'Papaya', 'Chili leaves(Malunggay)', 'Fish Sauce', 'Salt', 'Pepper'] },
-                { name: 'Pakbet', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] }
-            ];
+        const inputValue = inputtedIngridients.value.trim();
+        if (inputValue) {
+            ingredients.push(inputValue.toLowerCase());
+            renderIngredientItems();
+            inputtedIngridients.value = '';
+        }
 
-            const suggestedRecipes = recipes.filter(recipe => {
-                return recipe.ingredients.some(ingredient => {
-                    return ingredient.toLowerCase().includes(inputValue.toLowerCase());
-                });
-            });
+        const recipes = [
+            { name: 'Scrambled Eggs', ingredients: ['eggs', 'egg', 'salt', 'pepper'], difficulty: 'hard', time: '5 Minutes' },
+            { name: 'Omelette', ingredients: ['eggs', 'cheese', 'egg', 'tomatoes', 'onions'], difficulty: 'hard', time: '5 Minutes' },
+            { name: 'Boiled Eggs', ingredients: ['eggs', 'water', 'egg'], difficulty: 'hard', time: '5 Minutes' },
+            { name: 'Adobo', ingredients: ['Pork', 'Soy sauce', 'Vinegar', 'Garlic', 'Bay Leaves', 'Black Peppercorns'] },
+            { name: 'Sinigang na Baboy', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] },
+            { name: 'Kare-Kare', ingredients: ['Oxtail', 'Banana Heart', 'Eggplant', 'String Beans (Sitaw)', 'Pehcay', 'Achuete', 'Peanut Sauce'] },
+            { name: 'Bicol Express', ingredients: ['Pork', 'Shrimp Paste', 'Garlic', 'Onion', 'Coconut Cream', 'Coconut Milk', 'Chili Peppers', 'Finger Chilies (Siling haba)'] },
+            { name: 'Tinolang Manok', ingredients: ['Chicken', 'Garlic', 'Onion', 'Ginger', 'Papaya', 'Chili leaves(Malunggay)', 'Fish Sauce', 'Salt', 'Pepper'] },
+            { name: 'Pakbet', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] }
+        ];
 
-                renderRecipes(suggestedRecipes);
-            });
+        const suggestedRecipes = recipes.filter(recipe => {
+            return ingredients.every(ingredient => recipe.ingredients.some(rIngredient => rIngredient.toLowerCase().includes(ingredient)));
+        });
 
-            function renderRecipes(recipes) {
-                const fragment = document.createDocumentFragment();
+        renderRecipes(suggestedRecipes);
+    });
 
-                if (recipes.length > 0) {
-                    recipes.forEach(recipe => {
-                        const div = document.createElement('div');
-                        const removetext = document.getElementById('text-content')
+    function renderIngredientItems() {
+        ingredientItems.innerHTML = '';
+        ingredients.forEach(ingredient => {
+            const div = document.createElement('div');
+            div.classList.add('items');
+            div.innerHTML = `
+                <h5 class="ingredient-item">${ingredient}
+                    <span class="btn-delete">X</span>
+                </h5>
+            `;
+            ingredientItems.appendChild(div);
+        });
+    }
+    ingredientItems.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-delete')) {
+            const itemToDelete = event.target.closest('.items');
+            const itemName = itemToDelete.querySelector('.ingredient-item').textContent.trim();
+            const index = ingredients.indexOf(itemName.slice(0, -1)); // Removing the 'X' at the end
+            if (index !== -1) {
+                ingredients.splice(index, 1);
+                renderIngredientItems();
+                form.dispatchEvent(new Event('submit')); // Re-filter recipes
+            }
+        }
+    });
 
-                        removetext.style.display = "none";
-                        div.classList.add('col-lg-12', 'mt-4', 'card-contents');
+    function renderRecipes(recipes) {
+        const fragment = document.createDocumentFragment();
+        const removetext = document.getElementById('text-content');
+        if (removetext) {
+            removetext.style.display = "none";
+        }
 
-                        const links = {
-                            'scrambled eggs': 'pornhub.com'
-                        };
-                        const recipesimage = {
-                            'scrambled eggs': './assets/scrambledeggs.png',
-                            'omelette': './assets/omelette.png',
-                            'adobo': './assets/adobo.png',
-                            'kare-kare': './assets/omelette.png',
-                            'bicol express': './assets/bicolexpress.png',
-                            'tinolang manok': './assets/omelette.png',
-                            
-                        };
+        if (recipes.length > 0) {
+            recipes.forEach(recipe => {
+                const div = document.createElement('div');
+                div.classList.add('col-lg-12', 'mt-4', 'card-contents');
 
-                        const imagePath = recipesimage[recipe.name.toLowerCase()];
-                        const linksPath = links[recipe.name.toLowerCase()];
+                const recipesimage = {
+                    'scrambled eggs': './assets/scrambledeggs.png',
+                    'omelette': './assets/omelette.png',
+                    'adobo': './assets/adobo.png',
+                    'kare-kare': './assets/omelette.png',
+                    'bicol express': './assets/bicolexpress.png',
+                    'tinolang manok': './assets/omelette.png',
+                };
 
-                        div.innerHTML = `
-                            <div class="card" style="max-width: 90%; margin-bottom: 10px;">
-                                <div class="row g0">
-                                    <div class="col-lg-3">
-                                        <img src="${imagePath}" class="card_img" alt="" srcset="">
-                                    </div>
-                                    <div class="col-lg-9">
-                                        <div class="card-body">
-                                            <h6 class="time-prep">
-                                                <i class="fa-regular fa-clock" style="padding-right: 10px;"></i>
-                                                <span class="minutes">${recipe.time}</span> 
-                                                <span class="difficulty">Difficulty: ${recipe.difficulty || 'N/A'}</span>
-                                                <a href=""><i class="fa-solid fa-bookmark" style="padding-left: 29px;"></i></a>
-                                            </h6>
-                                            <h5 class="card-title"><b>${recipe.name}</b></h5>
-                                            <h5 class="card-text"></h5>
-                                            <p class="card-text"><b>Ingredients: </b>${recipe.ingredients.join(', ')}</p>      
-                                            <a href="${linksPath}" class="float-end mt-3" style="padding-bottom: 20px;">View recipe</a>
-                                        </div>
-                                    </div>
+                const imagePath = recipesimage[recipe.name.toLowerCase()];
+
+                div.innerHTML = `
+                    <div class="card" style="max-width: 90%; margin-bottom: 10px;">
+                        <div class="row g0">
+                            <div class="col-lg-3">
+                                <img src="${imagePath}" class="card_img" alt="" srcset="">
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="card-body">
+                                    <h6 class="time-prep">
+                                        <i class="fa-regular fa-clock" style="padding-right: 10px;"></i>
+                                        <span class="minutes">${recipe.time || 'N/A'}</span> 
+                                        <span class="difficulty">Difficulty: ${recipe.difficulty || 'N/A'}</span>
+                                        <a href=""><i class="fa-solid fa-bookmark" style="padding-left: 29px;"></i></a>
+                                    </h6>
+                                    <h5 class="card-title"><b>${recipe.name}</b></h5>
+                                    <h5 class="card-text"></h5>
+                                    <p class="card-text"><b>Ingredients: </b>${recipe.ingredients.join(', ')}</p>      
+                                    <a href="#" class="float-end mt-3" style="padding-bottom: 20px;">View recipe</a>
                                 </div>
                             </div>
-                        `;
-                        fragment.appendChild(div);
-                        
-                    });
-                } else {
-                    const div = document.createElement('div');
-                    const removetext = document.getElementById('text-content')
-
-                    removetext.style.display = "none";
-
-                    div.classList.add('mt-5', 'recipes-notfound', 'text-center');
-                    div.style.paddingLeft = '25%';
-                    div.textContent = 'Recipes Not Found';
-                    fragment.appendChild(div);
-                }
-
-                const btnadd = document.getElementById('search');
-                const ingredientItems = document.getElementById('ingredientItems');
-                btnadd.onclick = function(){
-                    ingredientItems.innerHTML += `
-                    <div class="items">
-                        <h5 class="ingredient-item id="ingredient-item">${inputtedIngridients.value}
-                            <span id="btn-delete" class="btn-delete">X</span>
-                        </h5>
+                        </div>
                     </div>
-                    `
-                const existingItem = document.getElementById('ingredient-item');
+                `;
+                fragment.appendChild(div);
+            });
+        } else {
+            const div = document.createElement('div');
+            div.classList.add('mt-5', 'recipes-notfound', 'text-center');
+            div.style.paddingLeft = '25%';
+            div.textContent = 'Recipes Not Found';
+            div.style.color = 'white';
+            fragment.appendChild(div);
+        }
 
-                    if(existingItem.value === inputtedIngridients.value){
-                        alert("This ingredients already inputted");
-                        return;
-                    }else{
-                   
-                    }
-                }
-                ingredientItems.onclick = function(event) {
-                    if (event.target.classList.contains('btn-delete')) {
-                        const itemToDelete = event.target.closest('.items');
-                        ingredientItems.removeChild(itemToDelete);
-                    }
-        };
+        recipeResults.innerHTML = '';
+        recipeResults.appendChild(fragment);
+    }
+});
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        // const form = document.getElementById('recipeForm');
+        // const recipeResults = document.getElementById('recipeResults');
+        // const inputtedIngridients = document.getElementById('inputValue');
+
+        //     form.addEventListener('submit', function(event) {
+        //     event.preventDefault();
+
+        //     const inputValue = document.getElementById('inputValue').value;
+        //     const recipes = [
+               
+        //         { name: 'Scrambled Eggs', ingredients: ['eggs', 'egg', 'salt', 'pepper'], difficulty: 'hard', time: '5 Minutes' },
+        //         { name: 'Omelette', ingredients: ['eggs', 'cheese', 'egg', 'tomatoes', 'onions'], difficulty: 'hard', time: '5 Minutes' },
+        //         { name: 'Boiled Eggs', ingredients: ['eggs', 'water', 'egg'], difficulty: 'hard', time: '5 Minutes' },
+        //         { name: 'Adobo', ingredients: ['Pork', 'Soy sauce', 'Vinegar', 'Garlic', 'Bay Leaves', 'Black Peppercorns'] },
+        //         { name: 'Sinigang na Baboy', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] },
+        //         { name: 'Kare-Kare', ingredients: ['Oxtail', 'Banana Heart', 'Eggplant', 'String Beans (Sitaw)', 'Pehcay', 'Achuete', 'Peanut Sauce'] },
+        //         { name: 'Bicol Express', ingredients: ['Pork', 'Shrimp Paste', 'Garlic', 'Onion', 'Coconut Cream', 'Coconut Milk', 'Chili Peppers', 'Finger Chilies (Siling haba)'] },
+        //         { name: 'Tinolang Manok', ingredients: ['Chicken', 'Garlic', 'Onion', 'Ginger', 'Papaya', 'Chili leaves(Malunggay)', 'Fish Sauce', 'Salt', 'Pepper'] },
+        //         { name: 'Pakbet', ingredients: ['Pork', 'Tomatoes', 'Onion', 'Fish Sauce', 'Gabi', 'Radish', 'Long Beans', 'Eggplant', 'Okra', 'Bok Choy', 'Pechay'] }
+        //     ];
+
+        //     const suggestedRecipes = recipes.filter(recipe => {
+        //         return recipe.ingredients.some(ingredient => {
+        //             return ingredient.toLowerCase().includes(inputValue.toLowerCase());
+        //         });
+        //     });
+
+        //         renderRecipes(suggestedRecipes);
+        //     });
+
+        //     function renderRecipes(recipes) {
+        //         const fragment = document.createDocumentFragment();
+
+        //         if (recipes.length > 0) {
+        //             recipes.forEach(recipe => {
+        //                 const div = document.createElement('div');
+        //                 const removetext = document.getElementById('text-content')
+
+        //                 removetext.style.display = "none";
+        //                 div.classList.add('col-lg-12', 'mt-4', 'card-contents');
+
+        //                 const links = {
+                          
+        //                 };
+        //                 const recipesimage = {
+        //                     'scrambled eggs': './assets/scrambledeggs.png',
+        //                     'omelette': './assets/omelette.png',
+        //                     'adobo': './assets/adobo.png',
+        //                     'kare-kare': './assets/omelette.png',
+        //                     'bicol express': './assets/bicolexpress.png',
+        //                     'tinolang manok': './assets/omelette.png',
+                            
+        //                 };
+
+        //                 const imagePath = recipesimage[recipe.name.toLowerCase()];
+        //                 const linksPath = links[recipe.name.toLowerCase()];
+
+        //                 div.innerHTML = `
+        //                     <div class="card" style="max-width: 90%; margin-bottom: 10px;">
+        //                         <div class="row g0">
+        //                             <div class="col-lg-3">
+        //                                 <img src="${imagePath}" class="card_img" alt="" srcset="">
+        //                             </div>
+        //                             <div class="col-lg-9">
+        //                                 <div class="card-body">
+        //                                     <h6 class="time-prep">
+        //                                         <i class="fa-regular fa-clock" style="padding-right: 10px;"></i>
+        //                                         <span class="minutes">${recipe.time}</span> 
+        //                                         <span class="difficulty">Difficulty: ${recipe.difficulty || 'N/A'}</span>
+        //                                         <a href=""><i class="fa-solid fa-bookmark" style="padding-left: 29px;"></i></a>
+        //                                     </h6>
+        //                                     <h5 class="card-title"><b>${recipe.name}</b></h5>
+        //                                     <h5 class="card-text"></h5>
+        //                                     <p class="card-text"><b>Ingredients: </b>${recipe.ingredients.join(', ')}</p>      
+        //                                     <a href="${linksPath}" class="float-end mt-3" style="padding-bottom: 20px;">View recipe</a>
+        //                                 </div>
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 fragment.appendChild(div);
+                        
+        //             });
+        //         } else {
+        //             const div = document.createElement('div');
+        //             const removetext = document.getElementById('text-content')
+
+        //             removetext.style.display = "none";
+
+        //             div.classList.add('mt-5', 'recipes-notfound', 'text-center');
+        //             div.style.paddingLeft = '25%';
+        //             div.textContent = 'Recipes Not Found';
+        //             fragment.appendChild(div);
+        //         }
+
+        //         const btnadd = document.getElementById('search');
+        //         const ingredientItems = document.getElementById('ingredientItems');
+        //         btnadd.onclick = function(){
+        //             ingredientItems.innerHTML += `
+        //             <div class="items">
+        //                 <h5 class="ingredient-item id="ingredient-item">${inputtedIngridients.value}
+        //                     <span id="btn-delete" class="btn-delete">X</span>
+        //                 </h5>
+        //             </div>
+        //             `
+                
+                 
+        //         }
+        //         ingredientItems.onclick = function(event) {
+        //             if (event.target.classList.contains('btn-delete')) {
+        //                 const itemToDelete = event.target.closest('.items');
+        //                 ingredientItems.removeChild(itemToDelete);
+        //             }
+        // };
 
                
-                recipeResults.innerHTML = '';
-                recipeResults.appendChild(fragment);
-                inputtedIngridients.value = '';
+        //         recipeResults.innerHTML = '';
+        //         recipeResults.appendChild(fragment);
+        //         inputtedIngridients.value = '';
 
-            }
+        //     }
 
-        });
+        // });
 
         // const btnadd = document.getElementById('search');
         // const inputtedIngridients = document.getElementById('inputValue');
